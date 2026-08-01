@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, Copy, Check, Share2, Clock, Disc3, Music2 } from "lucide-react";
+import { ArrowLeft, Copy, Check, Share2, Clock, Disc3, Music2, Link } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { DisplayLyrics } from "@/types";
 import { formatDuration } from "@/lib/utils/lyrics";
@@ -103,12 +103,12 @@ export function LyricsView({ display, slug: _slug }: LyricsViewProps) {
 
         {/* Artist */}
         <p className="mt-2 text-lg font-medium text-[rgb(var(--color-text-secondary))]">
-          <a
+          <Link
             href={`/search?q=${encodeURIComponent(display.artistName)}&mode=artist`}
             className="transition-colors hover:text-brand-600 dark:hover:text-brand-400"
           >
             {display.artistName}
-          </a>
+          </Link>
         </p>
 
         {/* Album + Duration */}
@@ -116,12 +116,12 @@ export function LyricsView({ display, slug: _slug }: LyricsViewProps) {
           {display.albumName && (
             <span className="flex items-center gap-1.5 text-sm text-[rgb(var(--color-text-muted))]">
               <Disc3 size={14} aria-hidden="true" />
-              <a
+              <Link
                 href={`/search?q=${encodeURIComponent(display.albumName)}&mode=album`}
                 className="transition-colors hover:text-[rgb(var(--color-text-secondary))]"
               >
                 {display.albumName}
-              </a>
+              </Link>
             </span>
           )}
           {display.duration > 0 && (

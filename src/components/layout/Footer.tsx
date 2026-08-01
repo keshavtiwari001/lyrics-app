@@ -45,14 +45,14 @@ export function Footer() {
           {/* Copyright + attribution */}
           <p className="text-xs text-[rgb(var(--color-text-muted))]">
             © {currentYear} {SITE_CONFIG.name}. Lyrics via{" "}
-            <a
+            <Link
               href="https://lrclib.net"
               target="_blank"
               rel="noopener noreferrer"
               className="underline underline-offset-2 transition-colors hover:text-[rgb(var(--color-text-secondary))]"
             >
               LRCLIB
-            </a>
+            </Link>
             .
           </p>
         </div>

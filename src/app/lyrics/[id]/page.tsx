@@ -14,6 +14,7 @@ import { getLyricsById } from "@/lib/api/lrclib";
 import { buildDisplayLyrics, buildLyricsExcerpt, buildLyricsSlug } from "@/lib/utils/lyrics";
 import { SITE_CONFIG } from "@/lib/constants";
 import { LrclibNotFoundError } from "@/lib/api/lrclib";
+import Link from "next/link";
 
 interface LyricsPageProps {
   params: Promise<{ id: string }>;
@@ -179,18 +180,18 @@ export default async function LyricsPage({ params }: LyricsPageProps) {
         <nav aria-label="Breadcrumb" className="mb-8">
           <ol className="flex items-center gap-2 text-xs text-[rgb(var(--color-text-muted))]">
             <li>
-              <a href="/" className="transition-colors hover:text-[rgb(var(--color-text-secondary))]">
+              <Link href="/" className="transition-colors hover:text-[rgb(var(--color-text-secondary))]">
                 Home
-              </a>
+              </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
-              <a
+              <Link
                 href={`/search?q=${encodeURIComponent(record.artistName)}&mode=artist`}
                 className="transition-colors hover:text-[rgb(var(--color-text-secondary))]"
               >
                 {record.artistName}
-              </a>
+              </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li
