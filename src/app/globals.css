@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================================
+   CSS Custom Properties
+   These are used by Tailwind utilities and custom components alike.
+   Defining them here (not in JS) gives sub-millisecond access on paint.
+============================================================================= */
+
+@layer base {
+  :root {
+    /* Brand palette — indigo-violet */
+    --color-brand: 97 71 249;
+    --color-brand-light: 128 120 253;
+    --color-accent: 245 158 11;
+
+    /* Surfaces */
+    --color-bg: 255 255 255;
+    --color-bg-subtle: 250 250 250;
+    --color-bg-muted: 245 244 247;
+    --color-border: 228 212 240;
+    --color-border-subtle: 240 236 248;
+
+    /* Text */
+    --color-text-primary: 15 10 30;
+    --color-text-secondary: 90 80 120;
+    --color-text-muted: 148 140 168;
+    --color-text-inverse: 255 255 255;
+
+    /* Elevations / Shadows */
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.04),
+      0 16px 32px rgba(0, 0, 0, 0.03);
+    --shadow-card-hover: 0 2px 6px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.06),
+      0 24px 48px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 0 24px rgba(97, 71, 249, 0.25);
+
+    /* Radius */
+    --radius-card: 1rem;
+    --radius-pill: 9999px;
+  }
+
+  .dark {
+    --color-bg: 13 11 20;
+    --color-bg-subtle: 19 16 30;
+    --color-bg-muted: 26 22 40;
+    --color-border: 47 41 69;
+    --color-border-subtle: 36 31 53;
+
+    --color-text-primary: 240 238 255;
+    --color-text-secondary: 178 168 210;
+    --color-text-muted: 110 100 140;
+
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3),
+      0 16px 32px rgba(0, 0, 0, 0.2);
+    --shadow-card-hover: 0 2px 6px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.35),
+      0 24px 48px rgba(0, 0, 0, 0.25);
+  }
+
+  /* =============================================================================
+     Base HTML Styles
+     Smooth scrolling and default text rendering.
+  ============================================================================= */
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text-primary));
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  /* Respect user's motion preference — accessibility requirement */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Focus ring — keyboard accessibility */
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-brand));
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Better selection colour */
+  ::selection {
+    background-color: rgba(97, 71, 249, 0.2);
+    color: inherit;
+  }
+}
+
+/* =============================================================================
+   Component Utilities
+   Reusable class compositions — keeps Tailwind markup clean in JSX.
+============================================================================= */
+
+@layer components {
+  /* Card — the core visual unit of the UI */
+  .card {
+    @apply rounded-2xl border border-[rgb(var(--color-border-subtle))] bg-[rgb(var(--color-bg))] p-6;
+    box-shadow: var(--shadow-card);
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Shimmer skeleton for loading states */
+  .skeleton {
+    @apply rounded-lg bg-[rgb(var(--color-bg-muted))];
+    background-image: linear-gradient(
+      90deg,
+      rgb(var(--color-bg-muted)) 0%,
+      rgb(var(--color-bg-subtle)) 40%,
+      rgb(var(--color-bg-muted)) 80%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s infinite linear;
+  }
+
+  /* Lyrics text — large, readable, with generous line height */
+  .lyrics-text {
+    @apply font-body text-[1.05rem] leading-[2] tracking-wide;
+    color: rgb(var(--color-text-primary));
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* Pill / tag label */
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium;
+  }
+
+  /* Gradient text — used on the hero heading */
+  .gradient-text {
+    background-image: linear-gradient(
+      135deg,
+      rgb(var(--color-brand)) 0%,
+      rgb(var(--color-brand-light)) 50%,
+      rgb(var(--color-accent)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* =============================================================================
+   Keyframe Animations
+   Defined in CSS (not Tailwind JIT) for reliable SSR rendering.
+============================================================================= */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =============================================================================
+   Scrollbar Styling
+   Minimal scrollbar that matches the brand without being distracting.
+============================================================================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-border));
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-text-muted));
+}
