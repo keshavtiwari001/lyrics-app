@@ -22,8 +22,9 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)",
         headers: [
-          // Prevent clickjacking attacks
-          { key: "X-Frame-Options", value: "DENY" },
+          // Allow this site to be embedded in an iframe by removing X-Frame-Options.
+          // If you want to restrict embedding to a specific origin, use a Content-Security-Policy
+          // header with frame-ancestors instead.
           // Prevent MIME type sniffing
           { key: "X-Content-Type-Options", value: "nosniff" },
           // Enable strict HTTPS
